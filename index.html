@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Currency Exchange</title>
+</head>
+<body>
+    <div class="container">
+        <div class="output">
+            <h2>Exchange: <span id="exvalue"></span></h2>
+            <h3>Rate: <span id="exrate"></span></h3>
+        </div>
+        <div class="action">
+            <div><input type="number" id="currency-id" value="1"></div>
+            <div class="select">
+                <div>
+                <label for="fcurrency">First Currency</label>
+                <select name="fcurrency" id="fcurrency">
+                    <option value="null">Select </option>
+                </select>
+            </div>
+            <div>
+                <label for="scurrency">Second Currency</label>
+                <select name="scurrency" id="scurrency">
+                    <option value="null">Select </option>
+                </select>
+            </div>
+            </div>
+            <div>
+                <button id="convert" class="convert" onclick="calculate()">Calculate </button>
+            </div>
+        </div>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
