@@ -51,7 +51,7 @@ https://prolaxu.github.io/currency-exchange-calculator/
   
 ## Screenshots
 
-![App Screenshot](img/sh.png)
+![App Screenshot](imgs/sh.png)
 
   
 ## Authors
