@@ -1,59 +1,55 @@
-function getdata() {
-    var obj;
-    console.log("hello");
-    fetch('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json')
-    .then(res => res.json())
-    .then(data => obj = data)
-    .then(() => {
-        globalThis.currency_codes=obj;
-        globalThis.currency_codes_keys= Object.keys(obj);
-
-        for(i=0;i<currency_codes_keys.length;i++){
-            var option = document.createElement('option');
-            option.value= currency_codes_keys[i];
-            option.innerText= currency_codes[option.value];
-            document.getElementById('fcurrency').appendChild(option);
-        }
-        for(i=0;i<currency_codes_keys.length;i++){
-            var option = document.createElement('option');
-            option.value= currency_codes_keys[i];
-            option.innerText= currency_codes[option.value];
-            document.getElementById('scurrency').appendChild(option);
-        }
-    });
-    console.log("hello");
+let theme=false;
+let body = document.getElementsByTagName('body')[0];
+async function Cook() {
+    url='https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json';
+    const response = await fetch(url);
+    const json = await response.json();
+    addOptions('fcurrency',json);
+    addOptions('scurrency',json);
 }
 
-function addOptions(id){
-    for(i=0;i<currency_codes_keys.length;i++){
+function addOptions(id,obj){
+    let keys=Object.keys(obj);
+    for(i=0;i<keys.length;i++){
         var option = document.createElement('option');
-        option.value= currency_codes_keys[i];
-        option.innerText= currency_codes[option.value];
+        option.value= keys[i];
+        option.innerText= obj[option.value];
         document.getElementById(id).appendChild(option);
     }
 }
 
-function calculate(){
-    fcr=document.getElementById('fcurrency').value;
-    scr=document.getElementById('scurrency').value;
-    
-    var obj;
-    fetch('https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies/'+fcr+'/'+scr+'.json')
-    .then(res => res.json())
-    .then(data => obj = data)
-    .then(() =>{
-        keys=Object.keys(obj)
-        document.getElementById('exrate').innerText=obj[keys[1]]
-        document.getElementById('exvalue').innerText=document.getElementById('currency-id').value*obj[keys[1]]
-        //console.log(obj)
-    });
-   
+async function calculate(){
+    let fcr=document.getElementById('fcurrency').value;
+    let scr=document.getElementById('scurrency').value;
+    let calUrl='https://raw.githubusercontent.com/fawazahmed0/currency-api/1/latest/currencies/'+fcr+'/'+scr+'.json';
+    const response = await fetch(calUrl);
+    const json = await response.json();
+    keys=Object.keys(json);
+    let rate=fcr.toUpperCase()+" 1 /- = "+scr.toUpperCase()+" "+json[keys[1]]+" /-";
+    document.getElementById('exrate').innerText=rate;
+    document.getElementById('exvalue').innerText=scr.toUpperCase()+" "+document.getElementById('currency-id').value*json[keys[1]]+" /-";
 }
-function load(){
 
+
+function toggleTheme() {
+    console.log(theme);
+    let switcher=document.getElementById("switcher");
+    let cross=document.getElementById("cross-icon");
+    let themeicon=document.getElementById("theme-icon");
+    if(theme==false){
+        switcher.style.display="block";
+        cross.style.display="block";
+        themeicon.style.display="none";
+        theme=true;
+    }else{
+        switcher.style.display="none";
+        cross.style.display="none";
+        themeicon.style.display="block";
+        theme=false;
+    }
 }
-getdata();
-
-
-
-
+function changeTheme(theme) {
+    body.classList.replace(body.classList[0],theme);
+}
+Cook();
+calculate();
